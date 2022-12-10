@@ -7,41 +7,121 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Consulta CNPJ</title>
 
-    <!-- Configurações pagina de resultado-->
+    <!-- importação do CSS -->
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+
+    <!-- Inserindo background -->
     <style>
-        #resultado {
-            padding: 10px;
-            margin: 10px;
-            max-width: 350px;
-            background-color: lightyellow;
-            border: 1 px solid gray;
-            border-radius: 10px;
-            box-shadow: 2px 2px gray;
+        body {
+            background-image: url("imagens/background.png");
         }
     </style>
 
 </head>
 
+<!--Bing MAPS-->
+
+
+
+<!-- Logo -->
+
 <body>
-    <h1> Consulta de CEP</h1>
-    <label>Digite o numero do CEP</label>
-    <!-- Define a "variavel" que recebe o numero do cep -->
-    <input type="number" id="cep" />
+    <header>
+        <div class="center">
+            <div class="logo"><img src="imagens/logo.png" /></div>
+            <div class="menu">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+            </div><!-- menu -->
+        </div><!-- center -->
+    </header>
+</body>
 
-    <!-- Chama a funçao "consultaCEP" ao clicar no botão "Consultar" -->
-    <button onclick=" consultaCEP() "> Consultar </button>
 
-    <!-- Campo onde ficará o resultado da pesquisa -->
-    <div id="resultado">
-        <p>Seu resultado aqui</p>
+<body>
+    <!-- Configurações pagina de resultado-->
+    <style>
+        #resultado {
+            padding: 10px;
+            margin: 10px;
+            margin-left: 5%;
+            max-width: 350px;
+            background-color: rgb(255, 255, 255);
+            border: 1 px solid gray;
+            border-radius: 10px;
+            box-shadow: 2px 2px gray;
+
+
+        }
+    </style>
+
+    <!-- Configuração maps -->
+
+    <head>
+        <!-- Reference to the Bing Maps SDK -->
+        <script type='text/javascript'
+            src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Al-Uhfb4PxqxpezghcDzpHTSWYtUUHKKdzzx4aDxh-PAYAqawEar5gQQ6uxd22wV'
+            async defer></script>
+
+        <script type='text/javascript'>
+            function GetMap() {
+                var map = new Microsoft.Maps.Map('#myMap');
+
+            }
+        </script>
+    </head>
+
+
+    <!-- old map
+    <head>
+        <h1>Bing Maps Api</h1>
+    </head>
+    <main>
+        <div class=" options">
+            <input class="search_input" placeholder="Search">
+            <button class="search_btn">Search</button>
+        </div>
+        <div id="map"></div>
+
+        </main>
+
+        <script src="js/maps.js"></script>
+        <script src='http://www.bing.com/api/maps/mapcontrol?callback=getMap' async></script>-->
+
+
+
+    <div class="consulta">
+        <h1> Consulta de CEP</h1>
+        <label>Digite o numero do CEP</label>
+
+        <!-- Define a "variavel" que recebe o numero do cep -->
+        <input type="number" id="cep" />
+
+        <!-- Chama a funçao "consultaCEP" ao clicar no botão "Consultar" -->
+        <button onclick=" consultaCEP() "> Consultar </button>
+
+        <!-- Campo onde ficará o resultado da pesquisa -->
+        <div id="resultado">
+            <div class="result">
+                <p0>Seu resultado aqui</p0>
+            </div>
+        </div>
     </div>
 
+    <div id="myMap">
+        <div class="mapLayout">
+            <h1>Mapa Bing</h1>
+        </div>
+
+    </div>
 
     <!-- Espaço para o script (javascript) -->
     <script>
+
+        src = '';
+
         function consultaCEP() {
             let valor = document.querySelector('#cep').value;
-            console.log(valor)
 
             //O campo deverá ter 8 algarismos
             if (valor.length !== 8) {
@@ -58,8 +138,9 @@
                 response.json().then(mostrarEndereco);
 
             });
+        }
 
-        };
+
         // Apresentar dados para o usuario.
         function mostrarEndereco(dados) {
 
@@ -74,17 +155,21 @@
                 /* O innerHTML pode ser usado para receber o conteúdo de um elemento HTML
                    ou para definir um novo conteúdo para ele */
                 resultado.innerHTML =
-                    `<p>Endereço:    ${dados.logradouro} </p>
+
+                    `<div class="result">
+                     <p>Endereço:    ${dados.logradouro} </p>
                      <p>Complemento: ${dados.complemento}</p>
                      <p>Bairro:      ${dados.bairro}</p>
                      <p>Localidade:  ${dados.localidade} - ${dados.uf} </p>
                      <p>DDD:         ${dados.ddd} </p>
-                     <p>IBGE:        ${dados.ibge} </p>`
+                     <p>IBGE:        ${dados.ibge} </p>
+                     </div>`
+
             }
         }
 
-
     </script>
+
 </body>
 
 </html>
